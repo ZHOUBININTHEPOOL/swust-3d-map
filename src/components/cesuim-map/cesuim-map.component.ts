@@ -8,13 +8,16 @@ import './cesuim-map.component.less';
 })
 
 export class CesiumMapComponent implements OnInit {
-    private mapContainer: Element;
+    private mapContainer: any;
 
     constructor() { }
 
     ngOnInit() {
-        this.mapContainer = new Cesium.Viewer('cesium-container', {
+        const demProvider = new Cesium.CesiumTerrainProvider({
+            url: 'http://localhost:5566/AMap-Satellite/dem'
+        });
 
+        this.mapContainer = new Cesium.Viewer('cesium-container', {
         });
     }
 }
