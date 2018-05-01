@@ -1,5 +1,5 @@
 ## 如何使用  
-> git clone   
+> git clone git@github.com:smartlei24/swust-3d-map.git   
 > cd swust-3d-map  
 > npm install  
 > ng server
