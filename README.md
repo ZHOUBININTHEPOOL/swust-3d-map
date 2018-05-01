@@ -1,27 +1,15 @@
-# GraduationProject
+## 如何使用  
+> git clone   
+> cd swust-3d-map  
+> npm install  
+> ng server
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.7.4.
 
-## Development server
+## 关于Cesium的版本问题
+  截止05/01/2017，最新版本为1.44.0(github最新release版本为1.45.0，但未更新到npm)，但因为1.44.0在为cesium添加资源url前缀时出现bug，暂未修复，因此此处先暂时使用1.42.1，待1.45.0在npm更新后再进行更新  
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+## 为cesium添加type  
+  因为使用typescript进行开发，而cesium官方并没有为我们提供类型定义，因此此处我们在github上找到了一份[index.d.ts](https://github.com/laixiangran/cesium-typings) (已放入someting-else目录中)，在此十分感谢作者，有用到不妨点个star。将index.d.ts下载下来后，放入/nodes_modules/@types/cesium中，就可以使用cesium类型定义了，有代码提示和类型检查的感觉真是好啊  
 
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+## Url管理与环境配置
+  为方便Url的管理，以及自动适应不同环境下Url的区别，因此在项目中专门提供一个service进行配置: /src/service/url-provider.service.ts  
