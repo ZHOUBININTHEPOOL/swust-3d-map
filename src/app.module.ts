@@ -2,13 +2,18 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { IndexComponent } from './pages/';
-import { CesiumDirective } from './direactive/';
 import { UrlProviderService } from './service/url-provider.service';
+import { SwustCesiumMapComponent } from './components';
 
 @NgModule({
-    imports: [BrowserModule],
+    imports: [
+        BrowserModule
+    ],
     exports: [],
-    declarations: [IndexComponent, CesiumDirective],
+    declarations: [
+        IndexComponent,
+        SwustCesiumMapComponent
+    ],
     providers: [UrlProviderService],
     bootstrap: [IndexComponent]
 })

@@ -3,8 +3,9 @@ import { environment } from '../environments/environment';
 
 @Injectable()
 export class UrlProviderService implements OnInit {
-    public swustDemProviderUrl: string;
+    public swustTerrainProviderUrl: string;
     public swustImageProviderUrl: string;
+    public imageryProvider: string;
 
     constructor() { }
 
@@ -20,7 +21,8 @@ export class UrlProviderService implements OnInit {
     }
 
     private setProductionUrl(): void {
-        this.swustDemProviderUrl = 'http://localhost:5566/AMap-Satellite/dem';
+        this.swustTerrainProviderUrl = 'http://localhost:5566/dem';
         this.swustImageProviderUrl = '# NOT IMPLEMENT #';
+        this.imageryProvider = 'this.{s}.tianditu.com/Dataserver?T=img_w&x={x}&y={y}&l={z}';
     }
 }

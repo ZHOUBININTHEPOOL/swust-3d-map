@@ -1,37 +1,52 @@
-import { Component, OnInit, ElementRef } from '@angular/core';
-
-import './cesuim-map.component.less';
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { UrlProviderService } from '../../service/url-provider.service';
 
+import './swust-cesuim-map.component.less';
+
 @Component({
-    selector: 'app-cesium-map',
-    templateUrl: 'cesuim-map.component.html',
+    selector: 'app-swust-cesium',
+    templateUrl: './swust-cesuim-map.component.html',
 })
 
-export class CesiumMapComponent implements OnInit {
-    private viewer: any;
+export class SwustCesiumMapComponent implements OnInit {
+    private mapContainer: Cesium.CesiumWidget;
 
     constructor(
-        private urlProvider: UrlProviderService
+        private urlProvider: UrlProviderService,
     ) { }
 
     ngOnInit() {
-        const demProvider = new Cesium.CesiumTerrainProvider({
-            url: this.urlProvider.swustDemProviderUrl
+        this.InitMap();
+
+        this.AddWidget();
+    }
+
+    InitMap(): any {
+        const terrainProvider = new Cesium.CesiumTerrainProvider({
+            url: 'http://localhost:5566/dem'
         });
 
         const imageryProvider = new Cesium.UrlTemplateImageryProvider({
-            url: this.urlProvider.swustImageProviderUrl,
+            url: 'http://localhost:5566/cesium-swust-tiles/{z}/{x}/{y}.jpg',
             credit: new Cesium.Credit('西科大卫星全景图'),
-            subdomains: ['t15', 't16', 't17', 't18'],
             tilingScheme: new Cesium.WebMercatorTilingScheme(),
             maximumLevel: 18
         });
 
-        this.viewer = new Cesium.Viewer('cesium-container', {
-            terrainProvider: demProvider,
+        this.mapContainer = new Cesium.CesiumWidget('cesiumContainer', {
+            terrainProvider: terrainProvider,
             imageryProvider: imageryProvider,
-            baseLayerPicker: false
         });
+
+        const swust = Cesium.Cartesian3.fromDegrees(104.6951400, 31.5349400, 5000);
+        setTimeout(() => {
+            this.mapContainer.camera.flyTo({
+                destination: swust,
+            });
+        }, 3000);
+    }
+
+    AddWidget(): any {
+
     }
 }
