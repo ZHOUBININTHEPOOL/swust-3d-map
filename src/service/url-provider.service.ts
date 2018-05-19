@@ -1,28 +1,26 @@
-import { Injectable, OnInit } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { environment } from '../environments/environment';
 
 @Injectable()
-export class UrlProviderService implements OnInit {
-    public swustTerrainProviderUrl: string;
-    public swustImageProviderUrl: string;
-    public imageryProvider: string;
+export class UrlProviderService {
+    public get swustTerrainProviderUrl(): string {
+        return `${this.baseUrl}/dem`;
+    }
+
+    public get swustImageProviderUrl(): string {
+        return `${this.baseUrl}/cesium-swust-tiles/{z}/{x}/{y}.jpg`;
+    }
+
+    public get3dModelUrl(modelName: string): string {
+        return `${this.baseUrl}/3dModel/${modelName}.gltf`;
+    }
+
+    private get baseUrl(): string {
+        return environment.production ? '' : 'http://localhost:5566';
+    }
 
     constructor() { }
 
-    ngOnInit(): void {
-        if (environment.production) {
-            this.setProductionUrl();
-        } else {
-            this.setDevelopmentUrl();
-        }
-    }
-
-    private setDevelopmentUrl(): void {
-    }
-
     private setProductionUrl(): void {
-        this.swustTerrainProviderUrl = 'http://localhost:5566/dem';
-        this.swustImageProviderUrl = '# NOT IMPLEMENT #';
-        this.imageryProvider = 'this.{s}.tianditu.com/Dataserver?T=img_w&x={x}&y={y}&l={z}';
     }
 }

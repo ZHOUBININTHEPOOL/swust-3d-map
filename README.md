@@ -14,3 +14,8 @@
 
 ## Url管理与环境配置
   为方便Url的管理，以及自动适应不同环境下Url的区别，因此在项目中专门提供一个service进行配置: /src/service/url-provider.service.ts  
+
+## 添加资源MIME Type
+  extend Name | MIME Type
+  --- | --- 
+  .gltf | model/vnd.gltf+json

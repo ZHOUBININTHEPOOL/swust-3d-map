@@ -6438,7 +6438,7 @@ declare module Cesium {
 
     destroy(): void;
 
-    extend(mixin: Viewer.ViewerMixin, options: any): void;
+    extend(mixin: Viewer.ViewerMixin, options?: any): void;
 
     flyTo(target: Entity | Entity[] | EntityCollection | DataSource | ImageryLayer | Promise<Entity | Entity[] | EntityCollection | DataSource | ImageryLayer>,
       options?: { duration?: number; maximumHeight?: number; offset?: HeadingPitchRange }): Promise<boolean>;
@@ -6595,6 +6595,9 @@ declare module Cesium {
   }
 
   function sampleTerrain(terrainProvider: TerrainProvider, level: number, positions: Cartographic[]): Promise<Cartographic[]>;
+
+  /** Initiates a sampleTerrain() request at the maximum available tile level for a terrain dataset. */
+  function sampleTerrainMostDetailed(terrainProvider: TerrainProvider, positions: Cartographic[]): Promise<Cartographic[]>;
 
   function subdivideArray<T>(array: T[], numberOfArrays: number): T[][];
 
