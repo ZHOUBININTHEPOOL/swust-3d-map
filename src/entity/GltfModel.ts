@@ -1,5 +1,6 @@
 
 export interface GltfModel {
     name: string;
-    matrix: Cesium.Matrix4;
+    postion: Cesium.Cartesian3;
+    headingPitchRoll?: Cesium.HeadingPitchRoll;
 }

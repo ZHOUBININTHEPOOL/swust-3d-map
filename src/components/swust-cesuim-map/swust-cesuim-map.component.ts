@@ -24,9 +24,9 @@ export class SwustCesiumMapComponent implements OnInit {
     ngOnInit() {
         this.InitMap();
 
-        this.Load3dModel();
-
         this.InitEvent();
+
+        this.Load3dModel();
     }
 
     InitMap(): any {
@@ -50,7 +50,8 @@ export class SwustCesiumMapComponent implements OnInit {
             navigationHelpButton: false,
             homeButton: false,
             sceneModePicker: false,
-            geocoder: false
+            geocoder: false,
+            requestRenderMode: true
         });
 
         this.mapContainer.extend(Cesium.viewerCesiumInspectorMixin);
@@ -61,9 +62,11 @@ export class SwustCesiumMapComponent implements OnInit {
 
     private Load3dModel() {
         Models.forEach((i) => {
-            this.mapContainer.scene.primitives.add(Cesium.Model.fromGltf({
+            const hpr = i.headingPitchRoll ? i.headingPitchRoll : new Cesium.HeadingPitchRoll();
+            const model = this.mapContainer.scene.primitives.add(Cesium.Model.fromGltf({
                 url: this.urlProvider.get3dModelUrl(i.name),
-                modelMatrix: i.matrix
+                modelMatrix: Cesium.Transforms.headingPitchRollToFixedFrame(i.postion, hpr),
+                shadows: true
             }));
         });
     }

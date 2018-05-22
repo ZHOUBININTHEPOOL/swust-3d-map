@@ -6498,6 +6498,7 @@ declare module Cesium {
     terrainShadows?: ShadowMode;
     mapMode2D?: MapMode2D;
     projectionPicker?: boolean | any;
+    requestRenderMode?: boolean;
   }
 
   class VRButton {
@@ -7040,9 +7041,9 @@ declare module Cesium {
 
     function northUpEastToFixedFrame(origin: Cartesian3, ellipsoid?: Ellipsoid, result?: Matrix4): Matrix4;
 
-    function headingPitchRollToFixedFrame(origin: Cartesian3, heading: number, pitch: number, roll: number, ellipsoid?: Ellipsoid, result?: Matrix4): Matrix4;
+    function headingPitchRollToFixedFrame(origin: Cartesian3, headingPitchRoll: HeadingPitchRoll, ellipsoid?: Ellipsoid, result?: Matrix4): Matrix4;
 
-    function headingPitchRollQuaternion(origin: Cartesian3, heading: number, pitch: number, roll: number, ellipsoid?: Ellipsoid, result?: Quaternion): Quaternion;
+    function headingPitchRollQuaternion(origin: Cartesian3, headingPitchRoll: HeadingPitchRoll, ellipsoid?: Ellipsoid, result?: Quaternion): Quaternion;
 
     function computeTemeToPseudoFixedMatrix(date: JulianDate, result?: Matrix3): Matrix3;
 
