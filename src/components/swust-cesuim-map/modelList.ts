@@ -1,6 +1,5 @@
 import { GltfModel } from '../../entity';
 import { HeadingPitchRoll } from 'cesium';
-import { headersToString } from 'selenium-webdriver/http';
 
 const Models: GltfModel[] = [
     {

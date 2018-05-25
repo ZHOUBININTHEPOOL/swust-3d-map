@@ -11,12 +11,6 @@ import { Models } from './modelList';
 export class SwustCesiumMapComponent implements OnInit {
     private mapContainer: Cesium.Viewer;
 
-    private mouseOverPoint = {
-        longtitude: 0,
-        latitude: 0,
-        height: 0,
-    };
-
     constructor(
         private urlProvider: UrlProviderService,
     ) { }
@@ -54,8 +48,6 @@ export class SwustCesiumMapComponent implements OnInit {
             requestRenderMode: true
         });
 
-        this.mapContainer.extend(Cesium.viewerCesiumInspectorMixin);
-
         // this.mapContainer.cesiumWidget.creditContainer.style.display = 'none';
         setTimeout(this.flyToSwust(), 3000);
     }
@@ -72,9 +64,11 @@ export class SwustCesiumMapComponent implements OnInit {
     }
 
     private InitEvent() {
-
         const testArray = [Cesium.Cartographic.fromDegrees(104.6866607666, 31.5377248954)];
         const promise = Cesium.sampleTerrainMostDetailed(this.mapContainer.terrainProvider, testArray);
+        promise.then((graphics) => {
+            console.log(graphics);
+        });
     }
 
     private flyToSwust() {
