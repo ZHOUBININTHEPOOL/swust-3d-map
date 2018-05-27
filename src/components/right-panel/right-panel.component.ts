@@ -20,7 +20,7 @@ import { DisasterModelService } from '../../service/disaster-model.service';
   styleUrls: ['./right-panel.component.scss']
 })
 export class RightPanelComponent implements OnInit {
-  @Output() DisasterResult = new EventEmitter<Cesium.Geometry>();
+  @Output() disasterResult = new EventEmitter<Cesium.Geometry[]>();
 
   @ViewChild(PlumeDialogComponent)
   private plumeDialog: PlumeDialogComponent;
@@ -58,25 +58,25 @@ export class RightPanelComponent implements OnInit {
     this.plumeDialog.clickSubmit
       .subscribe((param) => {
         const result = this.disasterSvc.Plume(param);
-        this.DisasterResult.next(result);
+        this.disasterResult.next(result);
       });
 
     this.puffDialog.clickSubmit
     .subscribe((param) => {
       const result = this.disasterSvc.Puff(param);
-      this.DisasterResult.next(result);
+      this.disasterResult.next(result);
     });
 
     this.steamCloudDialog.clickSubmit
     .subscribe((param) => {
       const result = this.disasterSvc.Puff(param);
-      this.DisasterResult.next(result);
+      this.disasterResult.next(result);
     });
 
     this.steamCloudDialog.clickSubmit
     .subscribe((param) => {
       const result = this.disasterSvc.Puff(param);
-      this.DisasterResult.next(result);
+      this.disasterResult.next(result);
     });
   }
 }
