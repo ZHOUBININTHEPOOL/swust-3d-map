@@ -1,0 +1,11 @@
+<div class="panelbar-wrapper">
+    <kendo-panelbar>
+        <kendo-panelbar-item [title]="'灾害模型'"
+                             expanded='true'>
+            <kendo-panelbar-item title="高斯烟羽模型" (click)='clickDisasterModel("plume")' ></kendo-panelbar-item>
+            <kendo-panelbar-item title="高斯烟团模型" (click)='clickDisasterModel("puff")'></kendo-panelbar-item>
+            <kendo-panelbar-item title="蒸汽云模型" (click)='clickDisasterModel("steamCloud")'></kendo-panelbar-item>
+            <kendo-panelbar-item title="池火灾模型" (click)='clickDisasterModel("poolFire")'></kendo-panelbar-item>
+        </kendo-panelbar-item>
+    </kendo-panelbar>
+</div>

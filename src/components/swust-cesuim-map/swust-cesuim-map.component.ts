@@ -1,36 +1,40 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { UrlProviderService } from '../../service/url-provider.service';
 import { Models } from './modelList';
+import * as Rx from 'rxjs/';
 
 @Component({
     selector: 'app-swust-cesium',
     templateUrl: './swust-cesuim-map.component.html',
-    styleUrls: ['./swust-cesuim-map.component.less']
+    styleUrls: ['./swust-cesuim-map.component.scss']
 })
 
 export class SwustCesiumMapComponent implements OnInit {
     private mapContainer: Cesium.Viewer;
+    private modelDisplayOperation: string;
+    private showModel = true;
+
+    private mapLoadComplete$ = new Rx.ReplaySubject<void>(1);
+    private modelDisplayState$ = new Rx.Subject<boolean>();
 
     constructor(
         private urlProvider: UrlProviderService,
     ) { }
 
     ngOnInit() {
-        this.InitMap();
-
         this.InitEvent();
 
-        this.Load3dModel();
+        this.InitMap();
     }
 
-    InitMap(): any {
+    private InitMap(): any {
         const terrainProvider = new Cesium.CesiumTerrainProvider({
             url: this.urlProvider.swustTerrainProviderUrl
         });
 
         const imageryProvider = new Cesium.UrlTemplateImageryProvider({
             url: this.urlProvider.swustImageProviderUrl,
-            credit: new Cesium.Credit('西科大卫星全景图'),
+            credit: new Cesium.Credit('swust'),
             tilingScheme: new Cesium.WebMercatorTilingScheme(),
             maximumLevel: 18
         });
@@ -48,8 +52,22 @@ export class SwustCesiumMapComponent implements OnInit {
             requestRenderMode: true
         });
 
-        // this.mapContainer.cesiumWidget.creditContainer.style.display = 'none';
-        setTimeout(this.flyToSwust(), 3000);
+        this.mapLoadComplete$.next(null);
+        this.modelDisplayState$.next(this.showModel);
+    }
+
+    private InitEvent() {
+        this.mapLoadComplete$
+            .subscribe(() => {
+                this.flyToSwust();
+                this.Load3dModel();
+            });
+
+        this.modelDisplayState$
+            .subscribe((display) => {
+                this.modelDisplayOperation = display ? 'Hide Model' : 'Show Model';
+                this.mapContainer.scene.primitives.show = display;
+            });
     }
 
     private Load3dModel() {
@@ -63,18 +81,15 @@ export class SwustCesiumMapComponent implements OnInit {
         });
     }
 
-    private InitEvent() {
-        const testArray = [Cesium.Cartographic.fromDegrees(104.6866607666, 31.5377248954)];
-        const promise = Cesium.sampleTerrainMostDetailed(this.mapContainer.terrainProvider, testArray);
-        promise.then((graphics) => {
-            console.log(graphics);
-        });
+    private switchModelDisplayState() {
+        this.showModel = !this.showModel;
+        this.modelDisplayState$.next(this.showModel);
     }
 
     private flyToSwust() {
         const swust = Cesium.Cartesian3.fromDegrees(104.6951400, 31.5349400, 3000);
         this.mapContainer.camera.flyTo({
-            destination: swust,
+            destination: swust
         });
     }
 }

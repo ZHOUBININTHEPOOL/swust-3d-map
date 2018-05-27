@@ -1,0 +1,38 @@
+<kendo-window title='请提供蒸汽云爆炸模型的参数'>
+    <from class=".k-form-inline"
+          *ngIf="opened"
+          [formGroup]='formGroup'>
+        <fieldset>
+            <legend>
+                Parameters of Steam Cloud
+            </legend>
+        </fieldset>
+        <label class="k-form-field">
+            <span>燃料燃烧热</span>
+            <kendo-numerictextbox type="text"
+                                  class="k-textbox"
+                                  placeholder="燃料燃烧热"
+                                  [min]='0'
+                                  formControlName='heatOfCombustion' />
+            <span class="unit-text">KJ/Kg</span>
+        </label>
+        <label class="k-form-field">
+            <span>燃料质量</span>
+            <kendo-numerictextbox type="text"
+                                  class="k-textbox"
+                                  placeholder="燃料质量"
+                                  [min]='0'
+                                  formControlName='quality' />
+            <span class="unit-text">Kg</span>
+        </label>
+    </from>
+
+    <div class="text-right">
+        <button type="button"
+                class="k-button"
+                (click)="close()">取消</button>
+        <button type="button"
+                class="k-button k-primary"
+                (click)="submit()">确定</button>
+    </div>
+</kendo-window>

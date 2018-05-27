@@ -1,6 +1,11 @@
-<div id="cesiumContainer"></div>
-<div class="toolbar">
-    <button class="cesium-button cesium-button-toolbar" (click)="flyToSwust()">
-        Fly To SWUST
-    </button>
+<div class="map-container">
+    <div id="cesiumContainer"></div>
+    <div class="toolbar">
+        <button class="cesium-button cesium-button-toolbar" (click)="flyToSwust()">
+            SWUST
+        </button>
+        <button class="cesium-button cesium-button-toolbar" (click)="switchModelDisplayState()">
+            {{ modelDisplayOperation }}
+        </button>
+    </div>
 </div>

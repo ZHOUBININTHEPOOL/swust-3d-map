@@ -1,0 +1,12 @@
+.flex-containner {
+    display: flex;
+    height: 100%;
+}
+
+app-swust-cesium {
+    flex: 1;
+}
+
+app-right-panel {
+    width: 20%;
+}

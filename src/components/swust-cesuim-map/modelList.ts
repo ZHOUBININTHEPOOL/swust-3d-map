@@ -35,11 +35,11 @@ const Models: GltfModel[] = [
         postion: Cesium.Cartesian3.fromDegrees(104.6852260000, 31.5392600000, 510),
         headingPitchRoll: new Cesium.HeadingPitchRoll(Cesium.Math.PI_OVER_FOUR)
     },
-    {
-        name: 'dong7',
-        postion: Cesium.Cartesian3.fromDegrees(104.7038060000, 31.5344640000, 480),
-        headingPitchRoll: new Cesium.HeadingPitchRoll(Cesium.Math.PI)
-    },
+    // {
+    //     name: 'dong7',
+    //     postion: Cesium.Cartesian3.fromDegrees(104.7038060000, 31.5344640000, 480),
+    //     headingPitchRoll: new Cesium.HeadingPitchRoll(Cesium.Math.PI)
+    // },
     {
         name: 'dong8',
         postion: Cesium.Cartesian3.fromDegrees(104.6962260000, 31.5351090000, 480),
