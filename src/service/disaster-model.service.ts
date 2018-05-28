@@ -1,24 +1,20 @@
 import { Injectable } from '@angular/core';
-import {
-  SteamCloudResult,
-  PlumeParameter,
-  PuffParameter,
-  PoolFireParameter
-} from '../entity';
+import { PlumeParameter, PuffParameter, PoolFireParameter } from '../entity';
 import { SteamCloudParameter } from '../entity/SteamCloudParameter';
+import * as Rx from 'rxjs/';
 
 @Injectable()
 export class DisasterModelService {
   constructor() {}
 
-  /**
-   * PlumeModel
-   */
-  public Plume(param: PlumeParameter): Cesium.Geometry[] {}
+  public disasterType$ = new Rx.ReplaySubject<string>(1);
+  public selectedPoint$ = new Rx.ReplaySubject<Cesium.Cartesian3>(1);
 
-  public Puff(param: PuffParameter): Cesium.Geometry[] {}
+  public Plume(position: Cesium.Cartesian3, param: PlumeParameter) {}
 
-  public SteamCloud(param: SteamCloudParameter): Cesium.Geometry[] {
+  public Puff(position: Cesium.Cartesian3, param: PuffParameter) {}
+
+  public SteamCloud(position: Cesium.Cartesian3, param: SteamCloudParameter) {
     const wt = 1.8 * 0.04 * param.heatOfCombustion * param.quality / 4520000;
 
     return {
@@ -40,7 +36,7 @@ export class DisasterModelService {
     };
   }
 
-  public PoolFire(param: PoolFireParameter): Cesium.Geometry[] {
+  public PoolFire(position: Cesium.Cartesian3, param: PoolFireParameter) {
     const fireSpeed =
       0.001 *
       param.combustionHeat /

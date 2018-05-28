@@ -5,5 +5,4 @@ export * from './PuffParameter';
 export * from './PoolFireParamater';
 export * from './SteamCloudParameter';
 
-export * from './SteamCloudResult';
-export * from './DisasterModelResult';
+export * from './DisasterType';

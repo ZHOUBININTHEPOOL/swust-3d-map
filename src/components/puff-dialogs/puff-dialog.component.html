@@ -1,0 +1,78 @@
+<kendo-dialog title='请提供高斯烟团模型的参数'
+              *ngIf='opened'
+              (close)='close()'>
+    <div class="container">
+        <form [formGroup]='formGroup'>
+            <div class="row">
+                <label class='col-2 col-form-label'>
+                    风速
+                </label>
+                <div class="col-4 input-group">
+                    <input type='number'
+                           class='form-control'
+                           placeholder='风速'
+                           [min]='0'
+                           formControlName='windSpeed' />
+                    <div class="input-group-append">
+                        <span class="input-group-text">m/s</span>
+                    </div>
+                </div>
+
+                <label class='col-2 col-form-label'>
+                    泄露源强
+                </label>
+                <div class="col-4 input-group">
+                    <input type='number'
+                           class='form-control'
+                           placeholder='泄露源强'
+                           [min]='0'
+                           formControlName='sourceIntensity' />
+                    <div class="input-group-append">
+                        <span class="input-group-text">m/s</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <label class='col-2 col-form-label'>
+                    计算浓度
+                </label>
+                <div class="col-4 input-group">
+                    <input type='number'
+                           class='form-control'
+                           placeholder='需要计算等值线的浓度值'
+                           [min]='0'
+                           formControlName='concentration' />
+                    <div class="input-group-append">
+                        <span class="input-group-text">m/s</span>
+                    </div>
+                </div>
+
+
+                <label class='col-2 col-form-label'>
+                    风向
+                </label>
+                <div class="col-4 input-group">
+                    <input type='number'
+                           class='form-control'
+                           placeholder='正北为0,顺时针)'
+                           [min]='0'
+                           formControlName='windAngle' />
+                    <div class="input-group-append">
+                        <span class="input-group-text">&#176;</span>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <kendo-dialog-actions>
+        <div class="text-right">
+            <button type="button"
+                    class="btn"
+                    (click)="close()">取消</button>
+            <button type="button"
+                    class="btn btn-primary"
+                    (click)="submit()">确定</button>
+        </div>
+    </kendo-dialog-actions>
+</kendo-dialog>

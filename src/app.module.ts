@@ -2,27 +2,26 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { IndexComponent } from './pages/';
-import { UrlProviderService } from './service/url-provider.service';
-import { SwustCesiumMapComponent, RightPanelComponent } from './components';
+import { RightPanelComponent } from './components';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { DialogsModule } from '@progress/kendo-angular-dialog';
 import { LayoutModule } from '@progress/kendo-angular-layout';
+import { DisasterModelService } from './service/disaster-model.service';
+import { SwustCesiumMapModule } from './components/swust-cesuim-map/swust-cesium-map.module';
 
 @NgModule({
     imports: [
         BrowserModule,
         NgbModule.forRoot(),
-        DialogsModule,
         LayoutModule,
-        BrowserAnimationsModule
+        BrowserAnimationsModule,
+        SwustCesiumMapModule
     ],
     exports: [],
     declarations: [
         IndexComponent,
-        SwustCesiumMapComponent,
         RightPanelComponent
     ],
-    providers: [UrlProviderService],
+    providers: [DisasterModelService],
     bootstrap: [IndexComponent]
 })
 export class AppModule { }

@@ -1,16 +1,17 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { SteamCloudParameter } from '../../entity';
+import * as Rx from 'rxjs/';
 
 @Component({
-  selector: 'app-dialog-steam-cloud',
+  selector: 'app-steam-cloud-dialog',
   templateUrl: 'steam-cloud-dialog.component.html',
   styleUrls: ['steam-cloud-dialog.component.scss']
 })
 export class SteamCloudDialogComponent implements OnInit {
-  private opened = true;
+  private opened = false;
   private formGroup: FormGroup;
-  @Output() clickSubmit = new EventEmitter<SteamCloudParameter>();
+  @Output() clickSubmit = new Rx.ReplaySubject<SteamCloudParameter>(1);
 
   constructor(private fb: FormBuilder) {}
 
@@ -40,6 +41,6 @@ export class SteamCloudDialogComponent implements OnInit {
       quality: this.formGroup.get('quality').value
     };
 
-    this.clickSubmit.emit(param);
+    this.clickSubmit.next(param);
   }
 }

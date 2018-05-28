@@ -1,38 +1,86 @@
-<kendo-window title='请提供蒸汽云爆炸模型的参数'>
-    <from class=".k-form-inline"
-          *ngIf="opened"
-          [formGroup]='formGroup'>
-        <fieldset>
-            <legend>
-                Parameters of Steam Cloud
-            </legend>
-        </fieldset>
-        <label class="k-form-field">
-            <span>燃料燃烧热</span>
-            <kendo-numerictextbox type="text"
-                                  class="k-textbox"
-                                  placeholder="燃料燃烧热"
-                                  [min]='0'
-                                  formControlName='heatOfCombustion' />
-            <span class="unit-text">KJ/Kg</span>
-        </label>
-        <label class="k-form-field">
-            <span>燃料质量</span>
-            <kendo-numerictextbox type="text"
-                                  class="k-textbox"
-                                  placeholder="燃料质量"
-                                  [min]='0'
-                                  formControlName='quality' />
-            <span class="unit-text">Kg</span>
-        </label>
-    </from>
+<kendo-dialog title='请提供蒸汽云爆炸模型的参数'
+              *ngIf='opened'
+              (close)='close()'>
+    <div class="container">
+        <form [formGroup]='formGroup'>
+            <div class="row">
+                <label class="col-2 col-form-label">液体燃烧热</label>
+                <div class="col-4 input-group">
+                    <input type='number'
+                           class="form-control"
+                           placeholder="液体燃烧热"
+                           [min]='0'
+                           formControlName='combustionHeat' />
+                </div>
+                <label class="col-2 col-form-label">必定压热容</label>
+                <div class="col-4 input-group">
+                    <input type='number'
+                           class="form-control"
+                           placeholder="必定压热容"
+                           [min]='0'
+                           formControlName='cp' />
+                </div>
+            </div>
 
-    <div class="text-right">
-        <button type="button"
-                class="k-button"
-                (click)="close()">取消</button>
-        <button type="button"
-                class="k-button k-primary"
-                (click)="submit()">确定</button>
+            <div class="row">
+                <label class="col-2 col-form-label">液体沸点</label>
+                <div class="col-4 input-group">
+                    <input type='number'
+                           class="form-control"
+                           placeholder="液体沸点"
+                           [min]='0'
+                           formControlName='tb' />
+                </div>
+                <label class="col-2 col-form-label">环境温度</label>
+                <div class="col-4 input-group">
+                    <input type='number'
+                           class="form-control"
+                           placeholder="环境温度"
+                           [min]='0'
+                           formControlName='to' />
+                </div>
+            </div>
+            <div class="row">
+
+                <label class="col-2 col-form-label">液体汽化热</label>
+                <div class="col-4 input-group">
+                    <input type='number'
+                           class="form-control"
+                           placeholder="液体汽化热"
+                           [min]='0'
+                           formControlName='vaporizationHeat' />
+                </div>
+                <label class="col-2 col-form-label">
+                    液池半径
+                </label>
+                <div class="col-4 input-group">
+                    <input type='number'
+                           class="form-control"
+                           placeholder="液池半径"
+                           [min]='0'
+                           formControlName='poolRadius' />
+                </div>
+            </div>
+            <div class="row">
+                <label class="col-2 col-form-label">空气密度</label>
+                <div class="col-4 input-group">
+                    <input type='number'
+                           class="form-control"
+                           placeholder="空气密度"
+                           [min]='0'
+                           formControlName='airDensity' />
+                </div>
+            </div>
+        </form>
     </div>
-</kendo-window>
+    <kendo-dialog-actions>
+        <div class="text-right">
+            <button type="button"
+                    class="btn"
+                    (click)="close()">取消</button>
+            <button type="button"
+                    class="btn btn-primary"
+                    (click)="submit()">确定</button>
+        </div>
+    </kendo-dialog-actions>
+</kendo-dialog>
