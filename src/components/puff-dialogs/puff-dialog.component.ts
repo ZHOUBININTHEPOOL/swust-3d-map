@@ -44,5 +44,6 @@ export class PuffDialogComponent implements OnInit {
     };
 
     this.clickSubmit.next(param);
+    this.close();
   }
 }

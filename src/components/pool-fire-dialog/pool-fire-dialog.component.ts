@@ -51,5 +51,6 @@ export class PoolFireDialogComponent implements OnInit {
     };
 
     this.clickSubmit.next(param);
+    this.close();
   }
 }

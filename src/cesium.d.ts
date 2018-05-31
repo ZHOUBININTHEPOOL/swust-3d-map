@@ -507,6 +507,8 @@ declare module Cesium {
 
         static fromDegrees(longitude: number, latitude: number, height?: number, result?: Cartographic): Cartographic;
 
+        static toCartesian(cartographic: Cartographic, ellipsoid?: Ellipsoid, result?: Cartesian3): Cartesian3
+
         static clone(cartographic: Cartographic, result?: Cartographic): Cartographic;
 
         static equals(left?: Cartographic, right?: Cartographic): boolean;
@@ -1654,7 +1656,7 @@ declare module Cesium {
 
         static multiplyByMatrix3(matrix: Matrix4, rotation: Matrix3, result: Matrix4): Matrix4;
 
-        static multiplyByTranslation(matrix: Matrix4, translation: Cartesian3, result: Matrix4): Matrix4;
+        static multiplyByTranslation(matrix: Matrix4, translation: Cartesian3, result?: Matrix4): Matrix4;
 
         static multiplyByUniformScale(matrix: Matrix4, scale: number, result: Matrix4): Matrix4;
 

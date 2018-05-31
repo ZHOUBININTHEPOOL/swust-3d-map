@@ -43,5 +43,6 @@ export class PlumeDialogComponent implements OnInit {
     };
 
     this.clickSubmit.next(param);
+    this.close();
   }
 }

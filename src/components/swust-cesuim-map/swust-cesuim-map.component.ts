@@ -8,6 +8,7 @@ import { PuffDialogComponent } from '../puff-dialogs/puff-dialog.component';
 import { SteamCloudDialogComponent } from '../steam-cloud-dialog/steam-cloud-dialog.component';
 import { PoolFireDialogComponent } from '../pool-fire-dialog/pool-fire-dialog.component';
 import { DisasterType } from '../../entity';
+import { HeightmapTerrainData } from 'cesium';
 
 @Component({
   selector: 'app-swust-cesium',
@@ -86,6 +87,12 @@ export class SwustCesiumMapComponent implements OnInit {
     this.handlerSelectPointEvent();
 
     this.handleDialogSubmit();
+
+    this.disasterSvc.result$.subscribe(entities => {
+      entities.forEach(i => {
+        this.mapContainer.entities.add(i);
+      });
+    });
   }
 
   private handlerSelectPointEvent() {
@@ -96,14 +103,21 @@ export class SwustCesiumMapComponent implements OnInit {
       this.el.nativeElement.querySelector('#cesiumContainer').style.cursor =
         'crosshair';
 
-      handler.setInputAction((click: Cesium.PositionedEvent) => {
-        const position = new Cesium.Cartesian3(
-          click.position.x,
-          click.position.y,
-          500
+      handler.setInputAction((movement: Cesium.PositionedEvent) => {
+        const cartesian = this.mapContainer.camera.pickEllipsoid(
+          movement.position,
+          this.mapContainer.scene.globe.ellipsoid
+        );
+        const cartographic = this.mapContainer.scene.globe.ellipsoid.cartesianToCartographic(
+          cartesian
         );
 
-        this.disasterSvc.selectedPoint$.next(position);
+        Cesium.sampleTerrain(this.mapContainer.terrainProvider, 7, [
+          cartographic
+        ]).then(i => {
+          this.disasterSvc.selectedPoint$.next(Cesium.Cartographic.toCartesian(cartographic));
+        });
+
       }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
 
       handler.setInputAction(() => {
@@ -169,16 +183,23 @@ export class SwustCesiumMapComponent implements OnInit {
       const hpr = i.headingPitchRoll
         ? i.headingPitchRoll
         : new Cesium.HeadingPitchRoll();
-      const model = this.mapContainer.scene.primitives.add(
-        Cesium.Model.fromGltf({
-          url: this.urlProvider.get3dModelUrl(i.name),
-          modelMatrix: Cesium.Transforms.headingPitchRollToFixedFrame(
-            i.postion,
-            hpr
-          ),
-          shadows: true
-        })
-      );
+
+      Cesium.sampleTerrain(this.mapContainer.terrainProvider, 7, [
+        i.postion
+      ]).then(position => {
+        const cartesian = Cesium.Cartographic.toCartesian(position[0]);
+
+        const model = this.mapContainer.scene.primitives.add(
+          Cesium.Model.fromGltf({
+            url: this.urlProvider.get3dModelUrl(i.name),
+            modelMatrix: Cesium.Transforms.headingPitchRollToFixedFrame(
+              cartesian,
+              hpr
+            ),
+            shadows: true
+          })
+        );
+      });
     });
   }
 

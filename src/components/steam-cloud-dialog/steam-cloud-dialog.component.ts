@@ -42,5 +42,6 @@ export class SteamCloudDialogComponent implements OnInit {
     };
 
     this.clickSubmit.next(param);
+    this.close();
   }
 }
