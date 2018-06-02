@@ -3,4 +3,5 @@ export interface PuffParameter {
   sourceIntensity: number;
   concentration: number;
   windAngle: number;
+  time: number;
 }

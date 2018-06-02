@@ -1,10 +1,9 @@
-import { PlumeParameter } from '../../entity';
+import { PuffParameter } from '../../entity';
 
-export class PlumeModel {
-  private param: PlumeParameter;
-  private h = 2;
+export class PuffModel {
+  private param: PuffParameter;
 
-  constructor(param: PlumeParameter) {
+  constructor(param: PuffParameter) {
     this.param = param;
   }
 
@@ -14,20 +13,21 @@ export class PlumeModel {
     let pointsOfTheZ = [];
     let relateZ = 0;
     do {
+      relateZ = relateZ + 0.5;
+      debugger;
       pointsOfTheZ = this.CalculatePointOfRelateZ(relateZ);
       points = points.concat(pointsOfTheZ);
-      relateZ = relateZ + 1;
     } while (pointsOfTheZ.length > 0);
 
     return points;
   }
 
   private GetSigmaY(x: number) {
-    return Math.pow(1 + 0.0004 * x, -0.5) * 0.32 * x;
+    return x / 4.3;
   }
 
   private GetSigmaZ(x: number) {
-    return Math.pow(1 + 0.0001 * x, -0.5) * 0.24 * x;
+    return 5 / 2.15;
   }
 
   private CalculatePointOfRelateZ(relateZ) {
@@ -36,11 +36,10 @@ export class PlumeModel {
 
     const cosAngle = Math.cos(2 * Math.PI / 360 * this.param.windAngle);
     const sinAngle = Math.sin(2 * Math.PI / 360 * this.param.windAngle);
-    for (let x = 0; x < 1500; x = x + 1) {
-      relateY = this.GetContourY(x, relateZ);
+    for (let x = 0; x < 1500; x = x + 0.5) {
+      relateY = this.GetRelateY(x, relateZ);
       if (!isNaN(relateY)) {
         // 除以111000 是为了从米转为经纬度，高度不用转换
-
         points.push([
           (x * cosAngle + relateY * sinAngle) / 111000,
           (relateY * cosAngle - x * sinAngle) / 111000,
@@ -67,23 +66,24 @@ export class PlumeModel {
     return points;
   }
 
-  private GetContourY(x: number, z: number) {
-    const sigmaY = this.GetSigmaY(x);
-    const sigmaZ = this.GetSigmaZ(x);
+  private GetRelateY(x: number, z: number) {
+    const sigmaY = this.GetSigmaY(x) * this.param.time;
+    const sigmaZ = this.GetSigmaZ(x) * this.param.time;
 
-    const temp1 =
-      2 *
-      Math.PI *
-      this.param.windSpeed *
+    const temp =
+      this.param.concentration *
+      Math.pow(2 * Math.PI, 2 / 3) *
       sigmaY *
-      sigmaZ *
-      this.param.concentration;
+      sigmaY *
+      sigmaZ /
+      (2 *
+        this.param.sourceIntensity *
+        Math.exp(
+          Math.pow((x - this.param.windSpeed * this.param.time) / sigmaY, 2) /
+            -2
+        ) *
+        Math.exp(Math.pow(z / sigmaZ, 2) / -2));
 
-    const temp2 =
-      this.param.sourceIntensity *
-      (Math.exp(Math.pow((z - this.h) / sigmaY, 2) / -2) +
-        Math.exp(Math.pow((z + this.h) / sigmaY, 2) / -2));
-
-    return Math.sqrt(-2 * Math.log(temp1 / temp2)) * sigmaY;
+    return Math.sqrt(-2 * Math.pow(sigmaY, 2) * Math.log(temp));
   }
 }

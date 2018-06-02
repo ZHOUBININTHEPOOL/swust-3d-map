@@ -27,7 +27,8 @@ export class PuffDialogComponent implements OnInit {
       windSpeed: [0],
       sourceIntensity: [0],
       concentration: [0],
-      windAngle: [0]
+      windAngle: [0],
+      time: [0]
     });
   }
 
@@ -40,7 +41,8 @@ export class PuffDialogComponent implements OnInit {
       windSpeed: this.formGroup.get('windSpeed').value,
       sourceIntensity: this.formGroup.get('sourceIntensity').value,
       concentration: this.formGroup.get('concentration').value,
-      windAngle: this.formGroup.get('windAngle').value
+      windAngle: this.formGroup.get('windAngle').value,
+      time: this.formGroup.get('time').value
     };
 
     this.clickSubmit.next(param);

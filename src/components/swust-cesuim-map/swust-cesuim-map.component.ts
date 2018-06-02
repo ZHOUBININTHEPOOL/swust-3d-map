@@ -115,7 +115,7 @@ export class SwustCesiumMapComponent implements OnInit {
         Cesium.sampleTerrain(this.mapContainer.terrainProvider, 7, [
           cartographic
         ]).then(i => {
-          this.disasterSvc.selectedPoint$.next(Cesium.Cartographic.toCartesian(cartographic));
+          this.disasterSvc.selectedPoint$.next(cartographic);
         });
 
       }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
@@ -168,13 +168,13 @@ export class SwustCesiumMapComponent implements OnInit {
     this.steamCloudDialog.clickSubmit
       .withLatestFrom(this.disasterSvc.selectedPoint$)
       .subscribe(([param, position]) => {
-        const result = this.disasterSvc.SteamCloud(position, param);
+        const result = this.disasterSvc.SteamCloud(Cesium.Cartographic.toCartesian(position), param);
       });
 
     this.poolFireDialog.clickSubmit
       .withLatestFrom(this.disasterSvc.selectedPoint$)
       .subscribe(([param, position]) => {
-        const result = this.disasterSvc.PoolFire(position, param);
+        const result = this.disasterSvc.PoolFire(Cesium.Cartographic.toCartesian(position), param);
       });
   }
 
@@ -184,6 +184,7 @@ export class SwustCesiumMapComponent implements OnInit {
         ? i.headingPitchRoll
         : new Cesium.HeadingPitchRoll();
 
+        // 获取模型位置的地形高程
       Cesium.sampleTerrain(this.mapContainer.terrainProvider, 7, [
         i.postion
       ]).then(position => {

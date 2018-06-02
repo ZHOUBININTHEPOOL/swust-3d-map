@@ -48,7 +48,6 @@
                     </div>
                 </div>
 
-
                 <label class='col-2 col-form-label'>
                     风向
                 </label>
@@ -60,6 +59,22 @@
                            formControlName='windAngle' />
                     <div class="input-group-append">
                         <span class="input-group-text">&#176;</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <label class='col-2 col-form-label'>
+                    时间
+                </label>
+                <div class="col-4 input-group">
+                    <input type='number'
+                           class='form-control'
+                           placeholder='需要计算等值线的浓度值'
+                           [min]='0'
+                           formControlName='time' />
+                    <div class="input-group-append">
+                        <span class="input-group-text">m/s</span>
                     </div>
                 </div>
             </div>

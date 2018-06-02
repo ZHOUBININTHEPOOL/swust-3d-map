@@ -2,20 +2,74 @@ import { Injectable } from '@angular/core';
 import { PlumeParameter, PuffParameter, PoolFireParameter } from '../entity';
 import { SteamCloudParameter } from '../entity/SteamCloudParameter';
 import * as Rx from 'rxjs/';
+import { PlumeModel } from './disaster-model/PlumeModel';
+import { PuffModel } from './disaster-model/PuffModel';
 
 @Injectable()
 export class DisasterModelService {
   constructor() {}
 
   public disasterType$ = new Rx.ReplaySubject<string>(1);
-  public selectedPoint$ = new Rx.ReplaySubject<Cesium.Cartesian3>(1);
+  public selectedPoint$ = new Rx.ReplaySubject<Cesium.Cartographic>(1);
   public result$ = new Rx.ReplaySubject<Cesium.Entity[]>(1);
 
-  public Plume(position: Cesium.Cartesian3, param: PlumeParameter) {
+  public Plume(position: Cesium.Cartographic, param: PlumeParameter) {
+    const relatePoints = new PlumeModel(param).getRelatePoints();
 
+    const pointEntities = [];
+    let entity, entitiyPosition;
+
+    const latitude = Cesium.Math.toDegrees(position.latitude);
+    const longtitude = Cesium.Math.toDegrees(position.longitude);
+    const height = position.height;
+
+    relatePoints.forEach(i => {
+      entitiyPosition = Cesium.Cartesian3.fromDegrees(
+        longtitude + i[0],
+        latitude + i[1],
+        height + 5 + i[2]
+      );
+      entity = new Cesium.Entity({
+        position: entitiyPosition,
+        point: new Cesium.PointGraphics({
+          color: Cesium.Color.fromAlpha(Cesium.Color.LIGHTPINK, 0.5),
+          pixelSize: 5
+        })
+      });
+      pointEntities.push(entity);
+    });
+
+    this.result$.next(pointEntities);
   }
 
-  public Puff(position: Cesium.Cartesian3, param: PuffParameter) {}
+  public Puff(position: Cesium.Cartographic, param: PuffParameter) {
+    const relatePoints = new PuffModel(param).getRelatePoints();
+
+    const pointEntities = [];
+    let entity, entitiyPosition;
+
+    const latitude = Cesium.Math.toDegrees(position.latitude);
+    const longtitude = Cesium.Math.toDegrees(position.longitude);
+    const height = position.height;
+    relatePoints.forEach(i => {
+      entitiyPosition = Cesium.Cartesian3.fromDegrees(
+        longtitude + i[0],
+        latitude + i[1],
+        height + 5 + i[2]
+      );
+      entity = new Cesium.Entity({
+        position: entitiyPosition,
+        point: new Cesium.PointGraphics({
+          color: Cesium.Color.fromAlpha(Cesium.Color.LIGHTPINK, 0.5),
+          pixelSize: 5
+        })
+      });
+
+      pointEntities.push(entity);
+    });
+
+    this.result$.next(pointEntities);
+  }
 
   public SteamCloud(position: Cesium.Cartesian3, param: SteamCloudParameter) {
     const wt = 1.8 * 0.04 * param.heatOfCombustion * param.quality / 4520000;
@@ -118,7 +172,6 @@ export class DisasterModelService {
         })
       );
     });
-
     this.result$.next(entity);
   }
 }

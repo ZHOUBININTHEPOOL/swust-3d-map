@@ -1,4 +1,4 @@
-<kendo-dialog title='请提供蒸汽云爆炸模型的参数'
+<kendo-dialog title='请提供池火灾模型的参数'
               *ngIf='opened'
               (close)='close()'>
     <div class="container">
@@ -11,14 +11,20 @@
                            placeholder="液体燃烧热"
                            [min]='0'
                            formControlName='combustionHeat' />
+                    <div class="input-group-append">
+                        <span class="input-group-text">J/kg</span>
+                    </div>
                 </div>
-                <label class="col-2 col-form-label">必定压热容</label>
+                <label class="col-2 col-form-label">定压比热容</label>
                 <div class="col-4 input-group">
                     <input type='number'
                            class="form-control"
-                           placeholder="必定压热容"
+                           placeholder="定压比热容"
                            [min]='0'
                            formControlName='cp' />
+                    <div class="input-group-append">
+                        <span class="input-group-text">J/(kg·K)</span>
+                    </div>
                 </div>
             </div>
 
@@ -30,6 +36,9 @@
                            placeholder="液体沸点"
                            [min]='0'
                            formControlName='tb' />
+                    <div class="input-group-append">
+                        <span class="input-group-text">K</span>
+                    </div>
                 </div>
                 <label class="col-2 col-form-label">环境温度</label>
                 <div class="col-4 input-group">
@@ -38,6 +47,9 @@
                            placeholder="环境温度"
                            [min]='0'
                            formControlName='to' />
+                    <div class="input-group-append">
+                        <span class="input-group-text">K</span>
+                    </div>
                 </div>
             </div>
             <div class="row">
@@ -49,6 +61,9 @@
                            placeholder="液体汽化热"
                            [min]='0'
                            formControlName='vaporizationHeat' />
+                    <div class="input-group-append">
+                        <span class="input-group-text">J/kg</span>
+                    </div>
                 </div>
                 <label class="col-2 col-form-label">
                     液池半径
@@ -59,6 +74,9 @@
                            placeholder="液池半径"
                            [min]='0'
                            formControlName='poolRadius' />
+                    <div class="input-group-append">
+                        <span class="input-group-text">m</span>
+                    </div>
                 </div>
             </div>
             <div class="row">
@@ -69,6 +87,11 @@
                            placeholder="空气密度"
                            [min]='0'
                            formControlName='airDensity' />
+                    <div class="input-group-append">
+                        <span class="input-group-text">kg/m
+                            <sup>3</sup>
+                        </span>
+                    </div>
                 </div>
             </div>
         </form>
