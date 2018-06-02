@@ -8,7 +8,6 @@ import { PuffDialogComponent } from '../puff-dialogs/puff-dialog.component';
 import { SteamCloudDialogComponent } from '../steam-cloud-dialog/steam-cloud-dialog.component';
 import { PoolFireDialogComponent } from '../pool-fire-dialog/pool-fire-dialog.component';
 import { DisasterType } from '../../entity';
-import { HeightmapTerrainData } from 'cesium';
 
 @Component({
   selector: 'app-swust-cesium',
@@ -67,6 +66,7 @@ export class SwustCesiumMapComponent implements OnInit {
       requestRenderMode: true
     });
 
+    this.mapContainer.extend(Cesium.viewerCesiumNavigationMixin, {});
     this.mapLoadComplete$.next(null);
     this.modelDisplayState$.next(this.showModel);
   }
@@ -184,7 +184,7 @@ export class SwustCesiumMapComponent implements OnInit {
         ? i.headingPitchRoll
         : new Cesium.HeadingPitchRoll();
 
-        // 获取模型位置的地形高程
+      // 获取模型位置的地形高程
       Cesium.sampleTerrain(this.mapContainer.terrainProvider, 7, [
         i.postion
       ]).then(position => {
@@ -192,7 +192,7 @@ export class SwustCesiumMapComponent implements OnInit {
 
         const model = this.mapContainer.scene.primitives.add(
           Cesium.Model.fromGltf({
-            url: this.urlProvider.get3dModelUrl(i.name),
+            url: this.urlProvider.get3dModelUrl(i.urlName),
             modelMatrix: Cesium.Transforms.headingPitchRollToFixedFrame(
               cartesian,
               hpr

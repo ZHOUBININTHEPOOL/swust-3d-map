@@ -6602,6 +6602,8 @@ declare module Cesium {
 
     function viewerCesiumInspectorMixin(viewer: Viewer): void;
 
+    function viewerCesiumNavigationMixin(view: Viewer): void;
+
     function viewerDragDropMixin(viewer: Viewer, options?: { dropTarget?: Element | string; clearOnDrop?: boolean; proxy?: DefaultProxy }): void;
 
     function viewerPerformanceWatchdogMixin(viewer: Viewer): void;
