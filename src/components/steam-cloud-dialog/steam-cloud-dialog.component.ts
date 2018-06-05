@@ -9,7 +9,7 @@ import * as Rx from 'rxjs/';
   styleUrls: ['steam-cloud-dialog.component.scss']
 })
 export class SteamCloudDialogComponent implements OnInit {
-  private opened = false;
+  opened = false;
   private formGroup: FormGroup;
   @Output() clickSubmit = new Rx.ReplaySubject<SteamCloudParameter>(1);
 

@@ -9,7 +9,7 @@ import * as Rx from 'rxjs/';
   styleUrls: ['pool-fire-dialog.component.scss']
 })
 export class PoolFireDialogComponent implements OnInit {
-  private opened = false;
+  opened = false;
   private formGroup: FormGroup;
   @Output() clickSubmit = new Rx.ReplaySubject<PoolFireParameter>(1);
 

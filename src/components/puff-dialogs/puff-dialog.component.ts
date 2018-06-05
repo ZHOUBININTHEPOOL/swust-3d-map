@@ -8,7 +8,7 @@ import * as Rx from 'rxjs/';
   templateUrl: 'puff-dialog.component.html'
 })
 export class PuffDialogComponent implements OnInit {
-  private opened = false;
+  opened = false;
   private formGroup: FormGroup;
   @Output() clickSubmit = new Rx.ReplaySubject<PuffParameter>(1);
 

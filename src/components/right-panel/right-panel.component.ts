@@ -28,13 +28,13 @@ export class RightPanelComponent implements OnInit {
     this.initEvent();
   }
 
-  private clickDisasterModel(modelType: string) {
+  clickDisasterModel(modelType: string) {
     this.disasterSvc.disasterType$.next(modelType);
   }
 
   private initEvent() {}
 
-  private onNewRouteClick() {
+  onNewRouteClick() {
     this.flightControlSvc.newRoute$.next();
   }
 
@@ -51,13 +51,13 @@ export class RightPanelComponent implements OnInit {
     this.flightHeightTextboxShow = false;
   }
 
-  private followTypeChange(value) {
+  followTypeChange(value) {
     if (value) {
       this.flightControlSvc.viewFollowType$.next(value);
     }
   }
 
-  private exitFlight() {
+  exitFlight() {
     this.flightControlSvc.exitFlight$.next([]);
   }
 }

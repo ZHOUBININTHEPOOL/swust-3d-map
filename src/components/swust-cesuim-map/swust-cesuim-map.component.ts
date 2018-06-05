@@ -17,7 +17,7 @@ import { FlightControlService } from '../../service/flight-control.service';
 })
 export class SwustCesiumMapComponent implements OnInit {
   private mapContainer: Cesium.Viewer;
-  private modelDisplayOperation: string;
+  modelDisplayOperation: string;
   private showModel = true;
   private routeStation: Cesium.Cartographic[] = [];
 
@@ -452,12 +452,12 @@ export class SwustCesiumMapComponent implements OnInit {
     });
   }
 
-  private switchModelDisplayState() {
+  switchModelDisplayState() {
     this.showModel = !this.showModel;
     this.modelDisplayState$.next(this.showModel);
   }
 
-  private flyToSwust() {
+  flyToSwust() {
     const swust = Cesium.Cartesian3.fromDegrees(104.69514, 31.53494, 3000);
     this.mapContainer.camera.flyTo({
       destination: swust

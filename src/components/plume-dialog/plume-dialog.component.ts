@@ -8,7 +8,7 @@ import * as Rx from 'rxjs/';
   templateUrl: 'plume-dialog.component.html'
 })
 export class PlumeDialogComponent implements OnInit {
-  private opened = false;
+  opened = false;
   private formGroup: FormGroup;
   @Output() clickSubmit = new Rx.ReplaySubject<PlumeParameter>(1);
   constructor(private fb: FormBuilder) {}
