@@ -11,6 +11,10 @@ export class UrlProviderService {
         return `${this.baseUrl}/cesium-swust-tiles/{z}/{x}/{y}.jpg`;
     }
 
+    public get swustStreetProviderUrl(): string {
+        return `${this.baseUrl}/street/{z}/{x}/{y}.jpg`;
+    }
+
     public get3dModelUrl(modelName: string): string {
         return `${this.baseUrl}/3dModel/${modelName}.gltf`;
     }

@@ -6,3 +6,5 @@ export * from './PoolFireParamater';
 export * from './SteamCloudParameter';
 
 export * from './DisasterType';
+
+export * from './FlightState';

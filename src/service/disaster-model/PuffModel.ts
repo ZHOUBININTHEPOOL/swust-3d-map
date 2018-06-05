@@ -14,7 +14,6 @@ export class PuffModel {
     let relateZ = 0;
     do {
       relateZ = relateZ + 0.5;
-      debugger;
       pointsOfTheZ = this.CalculatePointOfRelateZ(relateZ);
       points = points.concat(pointsOfTheZ);
     } while (pointsOfTheZ.length > 0);

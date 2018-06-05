@@ -1,0 +1,10 @@
+{
+  "/myszsc": {
+    "target": "http://t0.tianditu.com",
+    "secure": true,
+    "pathRewrite": {
+    "^/myszsc": ""
+  },
+    "changeOrigin": true
+  }
+}

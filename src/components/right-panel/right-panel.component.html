@@ -2,10 +2,51 @@
     <kendo-panelbar>
         <kendo-panelbar-item [title]="'灾害模型'"
                              expanded='true'>
-            <kendo-panelbar-item title="高斯烟羽模型" (click)='clickDisasterModel("plume")' ></kendo-panelbar-item>
-            <kendo-panelbar-item title="高斯烟团模型" (click)='clickDisasterModel("puff")'></kendo-panelbar-item>
-            <kendo-panelbar-item title="蒸汽云模型" (click)='clickDisasterModel("steamCloud")'></kendo-panelbar-item>
-            <kendo-panelbar-item title="池火灾模型" (click)='clickDisasterModel("poolFire")'></kendo-panelbar-item>
+            <kendo-panelbar-item title="高斯烟羽模型"
+                                 (click)='clickDisasterModel("plume")'></kendo-panelbar-item>
+            <kendo-panelbar-item title="高斯烟团模型"
+                                 (click)='clickDisasterModel("puff")'></kendo-panelbar-item>
+            <kendo-panelbar-item title="蒸汽云模型"
+                                 (click)='clickDisasterModel("steamCloud")'></kendo-panelbar-item>
+            <kendo-panelbar-item title="池火灾模型"
+                                 (click)='clickDisasterModel("poolFire")'></kendo-panelbar-item>
+        </kendo-panelbar-item>
+        <kendo-panelbar-item title='飞行控制'
+                             expanded='false'>
+            <kendo-panelbar-item title='新增路径'
+                                 (click)='onNewRouteClick()'></kendo-panelbar-item>
+            <kendo-panelbar-item title="离地高度">
+                <ng-template kendoPanelBarContent>
+                    <div class="input-group">
+                        <input type="number"
+                               class="form-control"
+                               id="heightInput"
+                               [value]='flightControlSvc.height$ | async' />
+                        <div class="input-group-append">
+                            <span class="input-group-text">m
+                            </span>
+                        </div>
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary"
+                                    type="button"
+                                    (click)='submitHeight()'>确定</button>
+                        </div>
+                    </div>
+                </ng-template>
+            </kendo-panelbar-item>
+            <kendo-panelbar-item title="视角设定">
+                <ng-template kendoPanelBarContent>
+                    <kendo-combobox class="form-control"
+                                    [data]="followTypes"
+                                    [value]='flightControlSvc.viewFollowType$ | async'
+                                    (selectionChange)="followTypeChange($event)"
+                                    [allowCustom]='false'
+                                    [clearButton]='false'>
+                    </kendo-combobox>
+                </ng-template>
+            </kendo-panelbar-item>
+            <kendo-panelbar-item title='退出飞行'
+                                 (click)='exitFlight()'></kendo-panelbar-item>
         </kendo-panelbar-item>
     </kendo-panelbar>
 </div>

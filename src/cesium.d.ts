@@ -1320,7 +1320,7 @@ declare module Cesium {
         secondsOfDay: number;
         static leapSeconds: LeapSecond[];
 
-        constructor(julianDayNumber: number, secondsOfDay: number, timeStandard?: TimeStandard);
+        constructor(julianDayNumber?: number, secondsOfDay?: number, timeStandard?: TimeStandard);
 
         clone(result?: JulianDate): JulianDate;
 
@@ -3130,6 +3130,7 @@ declare module Cesium {
     }
 
     class EntityOptions {
+        availability?: TimeIntervalCollection;
         id?: string;
         name?: string;
         show?: boolean;
@@ -3460,7 +3461,7 @@ declare module Cesium {
         uri: Property | string;
         maximumScale: Property | number;
 
-        constructor(options?: { uri?: Property | string; show?: Property; scale?: Property | number; minimumPixelSize?: Property | number; maximumScale: Property | number });
+        constructor(options?: { uri?: Property | string; show?: Property; scale?: Property | number; minimumPixelSize?: Property | number; maximumScale?: Property | number });
 
         clone(result?: ModelGraphics): ModelGraphics;
 
@@ -3486,7 +3487,7 @@ declare module Cesium {
         leadTime: Property;
         trailTime: Property;
 
-        constructor(options?: { leadTime?: Property; trailTime?: Property; show?: Property; width?: Property; material?: MaterialProperty; resolution?: Property });
+        constructor(options?: { leadTime?: Property; trailTime?: Property; show?: Property; width?: Property | number; material?: MaterialProperty | PolylineGlowMaterialProperty; resolution?: Property | number });
 
         clone(result?: PathGraphics): PathGraphics;
 
@@ -3659,12 +3660,11 @@ declare module Cesium {
     }
 
     class PolylineGlowMaterialProperty {
-        isConstant: boolean;
         definitionChanged: Event;
         color: Property;
         glowPower: Property;
 
-        constructor(options?: { color?: Property; glowPower?: Property });
+        constructor(options?: { color?: Property; glowPower?: Property | number });
 
         getType(time: JulianDate): string;
 
@@ -5934,7 +5934,7 @@ declare module Cesium {
         container: Element;
         viewModel: BaseLayerPickerViewModel;
 
-        constructor(container: Element, options: { globe: Globe; imageryProviderViewModels?: ProviderViewModel[]; selectedImageryProviderViewModel?: ProviderViewModel; terrainProviderViewModels?: ProviderViewModel[]; selectedTerrainProviderViewModel?: ProviderViewModel });
+        constructor(container: Element | string, options: { globe: Globe; imageryProviderViewModels?: ProviderViewModel[]; selectedImageryProviderViewModel?: ProviderViewModel; terrainProviderViewModels?: ProviderViewModel[]; selectedTerrainProviderViewModel?: ProviderViewModel });
 
         isDestroyed(): boolean;
 
