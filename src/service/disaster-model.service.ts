@@ -163,7 +163,7 @@ export class DisasterModelService {
       alpha = alpha + 0.2;
       const circle = new Cesium.EllipsoidGraphics({
         radii: new Cesium.Cartesian3(i, i, i),
-        material: Cesium.Color.fromAlpha(Cesium.Color.LAVENDER, alpha)
+        material: Cesium.Color.fromAlpha(Cesium.Color.DARKRED, alpha)
       });
       entity.push(
         new Cesium.Entity({

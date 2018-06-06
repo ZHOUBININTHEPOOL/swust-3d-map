@@ -84,8 +84,7 @@ export class SwustCesiumMapComponent implements OnInit {
       navigationHelpButton: false,
       homeButton: false,
       sceneModePicker: false,
-      geocoder: false,
-      requestRenderMode: true
+      geocoder: false
     });
 
     const baseLayer = new Cesium.BaseLayerPicker('baseLayerSelector', {

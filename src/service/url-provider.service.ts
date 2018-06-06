@@ -20,7 +20,7 @@ export class UrlProviderService {
     }
 
     private get baseUrl(): string {
-        return environment.production ? 'http://map-source.smartlei.cn' : 'http://localhost:5566';
+        return environment.production ? 'http://mapresource.smartlei.cn' : 'http://localhost:5566';
     }
 
     constructor() { }
