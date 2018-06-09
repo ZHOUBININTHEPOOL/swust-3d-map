@@ -99,7 +99,9 @@ export class SwustCesiumMapComponent implements OnInit {
 
   private InitEvent() {
     this.mapLoadComplete$.subscribe(() => {
-      this.flyToSwust();
+      setTimeout(() => {
+        this.flyToSwust();
+      }, 3000);
       setTimeout(() => {
         this.Load3dModel();
       }, 7000);
