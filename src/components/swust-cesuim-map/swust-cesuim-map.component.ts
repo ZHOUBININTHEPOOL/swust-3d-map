@@ -1,7 +1,8 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { UrlProviderService } from '../../service/url-provider.service';
 import { Models } from './modelList';
-import * as Rx from 'rxjs/';
+import { ReplaySubject, Subject } from 'rxjs/';
+import { withLatestFrom, map, filter } from 'rxjs/operators';
 import { DisasterModelService } from '../../service/disaster-model.service';
 import { PlumeDialogComponent } from '../plume-dialog/plume-dialog.component';
 import { PuffDialogComponent } from '../puff-dialogs/puff-dialog.component';
@@ -21,8 +22,8 @@ export class SwustCesiumMapComponent implements OnInit {
   private showModel = true;
   private routeStation: Cesium.Cartographic[] = [];
 
-  private mapLoadComplete$ = new Rx.ReplaySubject<void>(1);
-  private modelDisplayState$ = new Rx.Subject<boolean>();
+  private mapLoadComplete$ = new ReplaySubject<void>(1);
+  private modelDisplayState$ = new Subject<boolean>();
 
   @ViewChild(PlumeDialogComponent) private plumeDialog: PlumeDialogComponent;
   @ViewChild(PuffDialogComponent) private puffDialog: PuffDialogComponent;
@@ -182,7 +183,7 @@ export class SwustCesiumMapComponent implements OnInit {
     });
 
     this.flightControlSvc.state$
-      .filter(i => i.route.length > 1)
+      .pipe(filter(i => i.route.length > 1))
       .subscribe(state => {
         const points = state.route;
         const length = points.length;
@@ -234,7 +235,7 @@ export class SwustCesiumMapComponent implements OnInit {
         this.mapContainer.timeline.zoomTo(startTime, endTime);
 
         this.mapContainer.entities.removeById('plane');
-        const entity = this.mapContainer.entities.add({
+        this.mapContainer.entities.add({
           id: 'plane',
           availability: new Cesium.TimeIntervalCollection([
             new Cesium.TimeInterval({
@@ -345,9 +346,11 @@ export class SwustCesiumMapComponent implements OnInit {
 
     // 选点结束后 弹出框
     this.disasterSvc.selectedPoint$
-      .withLatestFrom(
-        this.disasterSvc.disasterType$,
-        (v1, disasterType) => disasterType
+      .pipe(
+        withLatestFrom(
+          this.disasterSvc.disasterType$,
+          (v1, disasterType) => disasterType
+        )
       )
       .subscribe(type => {
         switch (type) {
@@ -369,19 +372,19 @@ export class SwustCesiumMapComponent implements OnInit {
 
   private handleDialogSubmit() {
     this.plumeDialog.clickSubmit
-      .withLatestFrom(this.disasterSvc.selectedPoint$)
+      .pipe(withLatestFrom(this.disasterSvc.selectedPoint$))
       .subscribe(([param, position]) => {
         const result = this.disasterSvc.Plume(position, param);
       });
 
     this.puffDialog.clickSubmit
-      .withLatestFrom(this.disasterSvc.selectedPoint$)
+      .pipe(withLatestFrom(this.disasterSvc.selectedPoint$))
       .subscribe(([param, position]) => {
         const result = this.disasterSvc.Puff(position, param);
       });
 
     this.steamCloudDialog.clickSubmit
-      .withLatestFrom(this.disasterSvc.selectedPoint$)
+      .pipe(withLatestFrom(this.disasterSvc.selectedPoint$))
       .subscribe(([param, position]) => {
         const result = this.disasterSvc.SteamCloud(
           Cesium.Cartographic.toCartesian(position),
@@ -390,7 +393,7 @@ export class SwustCesiumMapComponent implements OnInit {
       });
 
     this.poolFireDialog.clickSubmit
-      .withLatestFrom(this.disasterSvc.selectedPoint$)
+      .pipe(withLatestFrom(this.disasterSvc.selectedPoint$))
       .subscribe(([param, position]) => {
         const result = this.disasterSvc.PoolFire(
           Cesium.Cartographic.toCartesian(position),

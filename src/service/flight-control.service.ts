@@ -1,19 +1,18 @@
 import { Injectable } from '@angular/core';
-import * as Rx from 'rxjs/';
+import { Observable, Subject, ReplaySubject, BehaviorSubject } from 'rxjs/';
+import { combineLatest } from 'rxjs/operators';
 import { FlightState } from '../entity';
 
 @Injectable()
 export class FlightControlService {
-  public height$ = new Rx.BehaviorSubject<number>(20);
-  public newRoute$ = new Rx.Subject();
-  public points$ = new Rx.ReplaySubject<Cesium.Cartographic[]>(1);
-  public viewFollowType$ = new Rx.ReplaySubject<string>(1);
-  public exitFlight$ = new Rx.Subject();
+  public height$ = new BehaviorSubject<number>(20);
+  public newRoute$ = new Subject();
+  public points$ = new ReplaySubject<Cesium.Cartographic[]>(1);
+  public viewFollowType$ = new ReplaySubject<string>(1);
+  public exitFlight$ = new Subject();
 
-  public state$ = Rx.Observable.combineLatest<FlightState>(
-    this.points$,
-    this.height$,
-    (points, height) => ({ route: points, height: height })
+  public state$ = this.points$.pipe(
+    combineLatest( this.height$, (points, height) => ({ route: points, height: height }))
   );
   constructor() {}
 }
