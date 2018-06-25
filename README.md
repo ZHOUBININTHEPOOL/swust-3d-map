@@ -2,7 +2,7 @@
 > git clone git@github.com:smartlei24/swust-3d-map.git   
 > cd swust-3d-map  
 > npm install  
-> 将 /src/service/url-provider.service.ts 中的基地址换为你的服务地址
+> 将 /src/service/url-provider.service.ts 中的基地址换为你的服务地址  
 > ng server
 
 ### 添加资源MIME Type
