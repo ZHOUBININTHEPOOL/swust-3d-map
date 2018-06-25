@@ -7,10 +7,10 @@
 
 ### 添加资源MIME Type
   发布地图资源后，访问如果遇到404，请添加MIME类型，如下表
-  | extend Name | MIME Type           |
-  | ----------- | ------------------- |
-  | .gltf       | model/vnd.gltf+json |
-  | .terrain    | application/vnd.quantized-mesh |
+extend Name | MIME Type          
+----------- | -------------------
+.gltf       | model/vnd.gltf+json
+.terrain    | application/vnd.quantized-mesh
 
 ## 其他
 ### 为cesium添加type  
