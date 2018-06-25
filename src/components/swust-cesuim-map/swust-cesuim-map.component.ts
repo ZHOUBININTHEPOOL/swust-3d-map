@@ -18,7 +18,7 @@ import { FlightControlService } from '../../service/flight-control.service';
 })
 export class SwustCesiumMapComponent implements OnInit {
   private mapContainer: Cesium.Viewer;
-  modelDisplayOperation: string;
+  modelDisplayButtonText: string;
   private showModel = true;
   private routeStation: Cesium.Cartographic[] = [];
 
@@ -99,25 +99,24 @@ export class SwustCesiumMapComponent implements OnInit {
   }
 
   private InitEvent() {
-    this.mapLoadComplete$.subscribe(() => {
-      setTimeout(() => {
-        this.flyToSwust();
-      }, 3000);
-      setTimeout(() => {
-        this.Load3dModel();
-      }, 7000);
+    setTimeout(() => {
+      this.flyToSwust();
+    }, 3000);
+
+    setTimeout(() => {
+      this.Load3dModel();
+    }, 7000);
+
+    this.modelDisplayState$.subscribe(display => {
+      this.modelDisplayButtonText = display ? '隐藏模型' : '显示模型';
+      this.mapContainer.scene.primitives.show = display;
     });
 
-    this.modelDisplayState$.subscribe(state => {
-      this.modelDisplayOperation = state ? '隐藏模型' : '显示模型';
-      this.mapContainer.scene.primitives.show = state;
-    });
-
-    this.handleSelectPointEvent();
+    this.handleDiasterClick();
 
     this.handleDialogSubmit();
 
-    this.handleFlightEvent();
+    this.handleFlight();
 
     this.disasterSvc.result$.subscribe(entities => {
       entities.forEach(i => {
@@ -126,7 +125,7 @@ export class SwustCesiumMapComponent implements OnInit {
     });
   }
 
-  private handleFlightEvent() {
+  private handleFlight() {
     // 选点
     this.flightControlSvc.newRoute$.subscribe(() => {
       const handler = this.mapContainer.screenSpaceEventHandler;
@@ -312,7 +311,7 @@ export class SwustCesiumMapComponent implements OnInit {
     );
   }
 
-  private handleSelectPointEvent() {
+  private handleDiasterClick() {
     // 当有灾害类型流有数据传入时， 开始选点
     this.disasterSvc.disasterType$.subscribe(() => {
       const handler = this.mapContainer.screenSpaceEventHandler;
